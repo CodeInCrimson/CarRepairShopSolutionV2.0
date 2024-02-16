@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace CarRepairShopSolution.Infrastructure
+namespace CarRepairShopSolution.Infrastructure.DependencyInjection
 {
     public static class DependencyInjection
     {
