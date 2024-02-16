@@ -1,4 +1,8 @@
-﻿namespace CarRepairShopSolution.Domain.Models;
+﻿// <copyright file="CarModel.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace CarRepairShopSolution.Domain.Models;
 public record CarModel : ModelBase
 {
     // private readonly int _id;
@@ -12,8 +16,11 @@ public record CarModel : ModelBase
     }
 
     public string Brand { get; init; }
+
     public string Model { get; init; }
+
     public int Year { get; init; }
+
     public int ClientId { get; init; }
 
     /// <summary>
