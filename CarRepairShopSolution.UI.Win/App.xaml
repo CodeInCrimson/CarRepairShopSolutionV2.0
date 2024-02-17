@@ -1,9 +1,22 @@
 ﻿<Application x:Class="CarRepairShopSolution.UI.Win.App"
               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              xmlns:local="clr-namespace:CarRepairShopSolution.UI.Win">
+              xmlns:local="clr-namespace:CarRepairShopSolution.UI.Win"
+              xmlns:views="clr-namespace:CarRepairShopSolution.UI.Win.Views"
+              xmlns:viewModels="clr-namespace:CarRepairShopSolution.UI.Win.ViewModels">
+    
     <Application.Resources>
-        <!-- Define global styles and resources here -->
-        
+        <ResourceDictionary>
+            
+            <DataTemplate DataType="{x:Type viewModels:HomePageViewModel}">
+                <views:HomePage />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ViewAndAddClientsViewModel}">
+                <views:ViewAndAddClients />
+            </DataTemplate>
+
+        </ResourceDictionary>
+
     </Application.Resources>
+
 </Application>
