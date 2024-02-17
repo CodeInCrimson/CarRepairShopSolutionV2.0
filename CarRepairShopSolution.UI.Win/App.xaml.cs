@@ -1,11 +1,16 @@
 ﻿// <copyright file="App.xaml.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
+
 namespace CarRepairShopSolution.UI.Win;
 
 using System.Diagnostics;
 using System.Windows;
+using CarRepairShopSolution.ApplicationServices.RepositoryMappings;
+using CarRepairShopSolution.Infrastructure.Persistence.DatabaseContextInit;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 /// <summary>
@@ -13,10 +18,16 @@ using Serilog;
 /// </summary>
 public partial class App : Application
 {
+    private readonly ServiceProvider _serviceProvider;
+
     public static IConfiguration? Config { get; private set; }
 
     public App()
     {
+        ServiceCollection services = new ServiceCollection();
+        ConfigureServices(services);
+        _serviceProvider = services.BuildServiceProvider();
+
         Config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
@@ -31,9 +42,32 @@ public partial class App : Application
         Log.Information("Application Starting Up");
     }
 
+    private void ConfigureServices(ServiceCollection services)
+    {
+        // TODO: Setup Configuration and Serilog
+
+        // TODO: Move sqlite dbContext
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlite("Data Source=carRepairShop.db"));
+
+        services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlite(Config.GetConnectionString("DefaultConnection")));
+
+        services.AddScoped<ClientService>();
+        services.AddScoped<CarService>();
+
+        // Register ViewModels
+        // services.AddSingleton<MainViewModel>();
+
+        // Add repository registrations
+    }
+
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+
+        //var mainWindow = _serviceProvider.GetService<MainWindow>();
+        //mainWindow?.Show();
 
         Log.Information("Application starting up");
     }

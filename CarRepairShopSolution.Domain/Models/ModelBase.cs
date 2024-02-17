@@ -39,13 +39,13 @@ public abstract record ModelBase
         UpdatedAt = DateTimeOffset.UtcNow;
     }
 
-    //[Key]
+    [Key]
     public int Id { get; }
 
-    //[Required]
+    [Required]
     public DateTimeOffset CreatedAt { get; }
 
-    //[Required]
+    [Required]
     public DateTimeOffset UpdatedAt
     {
         get => _updatedAt;

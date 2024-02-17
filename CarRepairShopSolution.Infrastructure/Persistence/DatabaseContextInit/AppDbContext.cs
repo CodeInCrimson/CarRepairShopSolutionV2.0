@@ -9,6 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
 {
+    public AppDbContext(DbContextOptions options)
+        : base(options)
+    {
+    }
+
     public DbSet<DbCar> Cars { get; set; }
 
     public DbSet<DbClient> Clients { get; set; }
@@ -23,6 +28,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<DbCar>(entity =>
         {
             entity.HasKey(c => c.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
             entity.HasOne(c => c.DbClient)
                   .WithMany(client => client.Cars)
                   .HasForeignKey(c => c.ClientId);
@@ -31,6 +37,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<DbClient>(entity =>
         {
             entity.HasKey(c => c.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
         });
     }
 }

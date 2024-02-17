@@ -7,7 +7,6 @@ namespace CarRepairShopSolution.UI.Win.DependencyInjection
         public static IServiceCollection AddViewModels(this IServiceCollection services)
         {
             //services.AddSingleton<MainViewModel>();
-
             //services.AddTransient<StartScreenViewModel>();
 
             //RegisterExaminationStepViewModels();
@@ -18,9 +17,6 @@ namespace CarRepairShopSolution.UI.Win.DependencyInjection
         //private static void RegisterExaminationStepViewModels()
         //{
         //    ExaminationStepViewModelFactory.Register<TemperatureExaminationStep, TemperatureViewModel>();
-        //    ExaminationStepViewModelFactory.Register<BloodPressureExaminationStep, BloodPressureViewModel>();
-        //    ExaminationStepViewModelFactory.Register<FacialDroopWithSmileExaminationStep, FacialDroopWithSmileViewModel>();
         //}
     }
-
 }

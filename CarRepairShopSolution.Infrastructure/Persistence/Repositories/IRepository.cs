@@ -17,8 +17,6 @@ public interface IRepository<T>
 
     Task AddAsync(T entity);
 
-    Task AddAsync(ClientModel clientModel);
-
     Task UpdateAsync(T entity);
 
     Task DeleteAsync(T entity);

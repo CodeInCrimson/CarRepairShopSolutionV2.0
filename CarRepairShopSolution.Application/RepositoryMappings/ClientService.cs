@@ -5,9 +5,11 @@
 namespace CarRepairShopSolution.ApplicationServices.RepositoryMappings;
 
 using CarRepairShopSolution.Domain.Models;
+using CarRepairShopSolution.Infrastructure.Persistence.DatabaseContextInit;
 using CarRepairShopSolution.Infrastructure.Persistence.DbModels;
 using CarRepairShopSolution.Infrastructure.Persistence.Mappings;
 using CarRepairShopSolution.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ public class ClientService
 
     public ClientService(IRepository<DbClient> clientRepository)
     {
-        _clientRepository = clientRepository;
+        this._clientRepository = clientRepository;
     }
 
     public async Task AddClientAsync(ClientModel clientModel)
