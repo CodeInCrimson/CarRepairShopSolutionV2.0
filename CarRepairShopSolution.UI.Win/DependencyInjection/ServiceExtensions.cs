@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CarRepairShopSolution.UI.Win.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CarRepairShopSolution.UI.Win.DependencyInjection
 {
@@ -6,17 +7,11 @@ namespace CarRepairShopSolution.UI.Win.DependencyInjection
     {
         public static IServiceCollection AddViewModels(this IServiceCollection services)
         {
-            //services.AddSingleton<MainViewModel>();
-            //services.AddTransient<StartScreenViewModel>();
-
-            //RegisterExaminationStepViewModels();
-
+            // Register ViewModels
+            services.AddSingleton<MainViewModel>();
+            services.AddTransient<HomePageViewModel>();
+            services.AddTransient<ViewAndAddClientsViewModel>();
             return services;
         }
-
-        //private static void RegisterExaminationStepViewModels()
-        //{
-        //    ExaminationStepViewModelFactory.Register<TemperatureExaminationStep, TemperatureViewModel>();
-        //}
     }
 }

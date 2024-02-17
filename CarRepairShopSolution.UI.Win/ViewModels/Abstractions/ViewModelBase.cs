@@ -48,17 +48,11 @@ public abstract class ViewModelBase : ObservableObject, IViewModel
         IsLoading = false;
     }
 
-    protected bool ValidateEmail(string emailInput)
+    protected bool ValidatePhone(string phoneInput)
     {
-        if (string.IsNullOrWhiteSpace(emailInput))
+        if (string.IsNullOrWhiteSpace(phoneInput))
         {
-            ErrorMessage = "TODO: ValidateEmail";
-            return false;
-        }
-
-        if (!MailAddress.TryCreate(emailInput, out MailAddress? _))
-        {
-            ErrorMessage = "TODO: ValidateEmail";
+            ErrorMessage = "TODO: ValidatePhone";
             return false;
         }
 

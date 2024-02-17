@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Windows;
 using CarRepairShopSolution.ApplicationServices.RepositoryMappings;
 using CarRepairShopSolution.Infrastructure.Persistence.DatabaseContextInit;
+using CarRepairShopSolution.UI.Win.DependencyInjection;
 using CarRepairShopSolution.UI.Win.Navigation;
 using CarRepairShopSolution.UI.Win.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -61,8 +62,7 @@ public partial class App : Application
         services.AddScoped<ClientService>();
         services.AddScoped<CarService>();
 
-        // Register ViewModels
-        services.AddSingleton<MainViewModel>();
+        services.AddViewModels();
 
         // Add repository registrations
     }
@@ -74,7 +74,7 @@ public partial class App : Application
         var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
 
-        // navigationService.NavigateTo<HomePageViewModel>();
+        navigationService.NavigateTo<HomePageViewModel>();
 
         MainWindow mainWindow = new () { DataContext = mainViewModel };
         mainWindow.Show();
