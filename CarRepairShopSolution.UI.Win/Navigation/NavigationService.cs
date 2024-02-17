@@ -5,8 +5,8 @@
 namespace CarRepairShopSolution.UI.Win.Navigation;
 
 using CarRepairShopSolution.UI.Win.ViewModels;
+using CarRepairShopSolution.UI.Win.ViewModels.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
-
 public class NavigationService : INavigationService
 {
     private readonly IServiceProvider _serviceProvider;
@@ -18,25 +18,20 @@ public class NavigationService : INavigationService
 
     public event EventHandler<ViewChangedEventArgs>? ViewChanged;
 
-    public void NavigateTo<TViewModel>()
-        where TViewModel : IViewModel
+    public void NavigateTo<TViewModel>() where TViewModel : ViewModelBase
     {
         var viewModel = _serviceProvider.GetRequiredService<TViewModel>();
         ChangeView(viewModel);
     }
 
-    public Task NavigateToAsync<TViewModel>(object parameter)
-        where TViewModel : IViewModel
+    public void NavigateBack()
     {
-        var viewModel = _serviceProvider.GetRequiredService<TViewModel>();
-        ChangeView(viewModel);
-
-        // TODO: non-async navigation will not trigger this initialization
-        return viewModel.InitializeAsync(parameter);
+        // TODO: Implement logic to navigate back to the HomePageViewModel
+        NavigateTo<HomePageViewModel>();
     }
 
-    private void ChangeView(IViewModel newViewModel)
+    private void ChangeView(ViewModelBase viewModel)
     {
-        ViewChanged?.Invoke(this, new ViewChangedEventArgs(newViewModel));
+        ViewChanged?.Invoke(this, new ViewChangedEventArgs(viewModel));
     }
 }
