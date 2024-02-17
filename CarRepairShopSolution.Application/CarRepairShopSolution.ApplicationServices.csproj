@@ -9,10 +9,15 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CarRepairShopSolution.Domain\CarRepairShopSolution.Domain.csproj" />
+    <ProjectReference Include="..\CarRepairShopSolution.Infrastructure\CarRepairShopSolution.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

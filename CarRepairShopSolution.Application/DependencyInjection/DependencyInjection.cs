@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CarRepairShopSolution.ApplicationServices
+namespace CarRepairShopSolution.ApplicationServices.DependencyInjection
 {
     public static class DependencyInjection
     {
