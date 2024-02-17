@@ -26,7 +26,6 @@ public class NavigationService : INavigationService
 
     public void NavigateBack()
     {
-        // TODO: Implement logic to navigate back to the HomePageViewModel
         NavigateTo<HomePageViewModel>();
     }
 

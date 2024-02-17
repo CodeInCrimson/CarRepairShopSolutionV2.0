@@ -1,18 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarRepairShopSolution.UI.Win.ViewModels.Abstractions;
 
 public abstract class ViewModelBase : ObservableObject, IViewModel
 {
     private bool _isLoading;
-    private bool _isEmergency;
     private string _errorMessage = string.Empty;
 
     public bool IsLoading
@@ -22,16 +15,6 @@ public abstract class ViewModelBase : ObservableObject, IViewModel
         {
             _isLoading = value;
             OnPropertyChanged(nameof(IsLoading));
-        }
-    }
-
-    public bool IsEmergency
-    {
-        get => _isEmergency;
-        set
-        {
-            _isEmergency = value;
-            OnPropertyChanged(nameof(IsEmergency));
         }
     }
 

@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Windows;
 using CarRepairShopSolution.ApplicationServices.RepositoryMappings;
 using CarRepairShopSolution.Infrastructure.Persistence.DatabaseContextInit;
+using CarRepairShopSolution.UI.Win.Navigation;
+using CarRepairShopSolution.UI.Win.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -53,11 +55,14 @@ public partial class App : Application
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlite(Config.GetConnectionString("DefaultConnection")));
 
+        // Register NavigationService for DI
+        services.AddScoped<INavigationService, NavigationService>();
+
         services.AddScoped<ClientService>();
         services.AddScoped<CarService>();
 
         // Register ViewModels
-        // services.AddSingleton<MainViewModel>();
+        services.AddSingleton<MainViewModel>();
 
         // Add repository registrations
     }
@@ -66,8 +71,13 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        //var mainWindow = _serviceProvider.GetService<MainWindow>();
-        //mainWindow?.Show();
+        var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+
+        // navigationService.NavigateTo<HomePageViewModel>();
+
+        MainWindow mainWindow = new () { DataContext = mainViewModel };
+        mainWindow.Show();
 
         Log.Information("Application starting up");
     }

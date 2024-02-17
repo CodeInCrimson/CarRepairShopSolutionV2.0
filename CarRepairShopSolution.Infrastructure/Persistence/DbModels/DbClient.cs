@@ -6,8 +6,6 @@ namespace CarRepairShopSolution.Infrastructure.Persistence.DbModels;
 
 public class DbClient : DbEntityBase
 {
-    public int Id { get; set; }
-
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
