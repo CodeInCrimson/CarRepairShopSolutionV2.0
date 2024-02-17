@@ -21,14 +21,16 @@ public partial class HomePageViewModel : ViewModelBase
 
         ViewClientsCommand =
             new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
-        //ViewCarsCommand =
-        //    new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
+        ViewCarsCommand =
+            new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
+        ManageClientsCommand =
+            new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
+        ManageCarsCommand =
+            new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
         //ManageClientsCommand =
         //    new RelayCommand(ShowNotImplemented);
-        //ManageCarsCommand =
-        //    new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
-
     }
+
     public ICommand ViewClientsCommand { get; }
 
     public ICommand ViewCarsCommand { get; }

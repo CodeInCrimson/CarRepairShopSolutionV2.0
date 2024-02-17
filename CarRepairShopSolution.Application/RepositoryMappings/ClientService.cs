@@ -24,14 +24,25 @@ public class ClientService
 
     public async Task AddClientAsync(ClientModel clientModel)
     {
-        var dbClient = ModelMapping.MapToDbClient(clientModel);
+        var dbClient = new DbClient
+        {
+            FirstName = clientModel.Firstname,
+            LastName = clientModel.Lastname,
+            PhoneNumber = clientModel.Phonenumber,
+            CreatedAt = clientModel.CreatedAt,
+            UpdatedAt = clientModel.UpdatedAt
+        };
+
+        // var dbClient = ModelMapping.MapToDbClient(clientModel);
         await _clientRepository.AddAsync(dbClient);
+        // await _context.SaveChangesAsync();
     }
 
     public async Task UpdateClientAsync(ClientModel clientModel)
     {
         var dbClient = ModelMapping.MapToDbClient(clientModel);
-        await _clientRepository.UpdateAsync(dbClient);
+        await _clientRepository.AddAsync(dbClient);
+        // await _clientRepository.UpdateAsync(dbClient);
     }
 
     public async Task DeleteClientAsync(int clientId)

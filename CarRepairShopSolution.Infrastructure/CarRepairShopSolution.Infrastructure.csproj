@@ -24,4 +24,8 @@
     <ProjectReference Include="..\CarRepairShopSolution.Domain\CarRepairShopSolution.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

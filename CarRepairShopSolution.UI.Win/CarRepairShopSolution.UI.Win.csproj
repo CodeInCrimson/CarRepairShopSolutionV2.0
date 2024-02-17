@@ -10,6 +10,10 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -20,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarRepairShopSolution.ApplicationService\CarRepairShopSolution.ApplicationService.csproj" />
     <ProjectReference Include="..\CarRepairShopSolution.Application\CarRepairShopSolution.ApplicationServices.csproj" />
+    <ProjectReference Include="..\CarRepairShopSolution.Domain\CarRepairShopSolution.Domain.csproj" />
     <ProjectReference Include="..\CarRepairShopSolution.Infrastructure\CarRepairShopSolution.Infrastructure.csproj" />
   </ItemGroup>
 

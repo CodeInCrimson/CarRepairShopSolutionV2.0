@@ -5,9 +5,12 @@
 namespace CarRepairShopSolution.UI.Win;
 
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using CarRepairShopSolution.ApplicationServices.RepositoryMappings;
 using CarRepairShopSolution.Infrastructure.Persistence.DatabaseContextInit;
+using CarRepairShopSolution.Infrastructure.Persistence.DbModels;
+using CarRepairShopSolution.Infrastructure.Persistence.Repositories;
 using CarRepairShopSolution.UI.Win.DependencyInjection;
 using CarRepairShopSolution.UI.Win.Navigation;
 using CarRepairShopSolution.UI.Win.ViewModels;
@@ -28,6 +31,7 @@ public partial class App : Application
     public App()
     {
         ServiceCollection services = new ServiceCollection();
+
         ConfigureServices(services);
         _serviceProvider = services.BuildServiceProvider();
 
@@ -49,12 +53,23 @@ public partial class App : Application
     {
         // TODO: Setup Configuration and Serilog
 
-        // TODO: Move sqlite dbContext
+        var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();
+
+        //services.AddInfrastructure(Config.GetConnectionString("DefaultConnection"));
+
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlite("Data Source=carRepairShop.db"));
 
-        services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlite(Config.GetConnectionString("DefaultConnection")));
+        //services.AddDbContext<AppDbContext>(options =>
+        //    options.UseSqlite(Config.GetConnectionString("DefaultConnection")));
+
+        // Register the generic repository for dependency injection
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+        services.AddScoped<IClientRepository, ClientRepository>();
 
         // Register NavigationService for DI
         services.AddScoped<INavigationService, NavigationService>();

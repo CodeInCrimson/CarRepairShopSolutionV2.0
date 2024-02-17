@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext : DbContext
 {
-    public AppDbContext(DbContextOptions options)
+    public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
     }
@@ -18,20 +18,13 @@ public class AppDbContext : DbContext
 
     public DbSet<DbClient> Clients { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite("Data Source=carRepairShop.db");
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<DbCar>(entity =>
         {
             entity.HasKey(c => c.Id);
             entity.Property(e => e.Id).ValueGeneratedOnAdd();
-            entity.HasOne(c => c.DbClient)
-                  .WithMany(client => client.Cars)
-                  .HasForeignKey(c => c.ClientId);
+            entity.HasOne(c => c.DbClient).WithMany(client => client.Cars).HasForeignKey(c => c.ClientId);
         });
 
         modelBuilder.Entity<DbClient>(entity =>

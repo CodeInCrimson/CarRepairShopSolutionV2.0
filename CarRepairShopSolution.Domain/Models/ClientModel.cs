@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using System.ComponentModel.DataAnnotations;
+
 namespace CarRepairShopSolution.Domain.Models;
 public record ClientModel : ModelBase
 {
@@ -22,6 +24,43 @@ public record ClientModel : ModelBase
         Lastname = lastName;
         Phonenumber = phoneNumber;
     }
+
+    public ClientModel(string firstName, string lastName, string phoneNumber,
+                       DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
+        : base(createdAt, updatedAt)
+    {
+        Firstname = firstName;
+        Lastname = lastName;
+        Phonenumber = phoneNumber;
+    }
+
+    private ClientModel(
+        int id,
+        DateTimeOffset? createdAt,
+        DateTimeOffset? updatedAt)
+        : base(id, createdAt, updatedAt)
+    {
+    }
+
+    /*
+    public static ClientModel New(
+        string firstName,
+        string lastName,
+        string phoneNumber)
+    {
+#pragma warning disable CS0618 // Type or member is obsolete
+        var model = new ClientModel(
+            id,
+            firstName,
+            lastName,
+            phoneNumber,
+            null,
+            null);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        return model;
+    }
+    */
 
     public string Firstname { get; init; }
 

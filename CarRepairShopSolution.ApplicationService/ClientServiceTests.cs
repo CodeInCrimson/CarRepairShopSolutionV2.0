@@ -23,7 +23,6 @@ public class ClientServiceTests
         var mockRepository = new Mock<IRepository<DbClient>>();
         var clientService = new ClientService(mockRepository.Object);
         var clientModel = new ClientModel(
-            id: 1,
             firstName: "John",
             lastName: "Doe",
             phoneNumber: "1234567890",
@@ -31,7 +30,6 @@ public class ClientServiceTests
             updatedAt: DateTimeOffset.UtcNow);
 
         var clientModel1 = new ClientModel(
-            id: 2,
             firstName: "Mark",
             lastName: "Doe",
             phoneNumber: "1231251221",
@@ -62,7 +60,6 @@ public class ClientServiceTests
         var clientService = new ClientService(clientRepository);
 
         var clientModel = new ClientModel(
-            id: 2,
             firstName: "Mark",
             lastName: "Doe",
             phoneNumber: "1231251221",

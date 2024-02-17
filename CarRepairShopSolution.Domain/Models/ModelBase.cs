@@ -11,6 +11,13 @@ public abstract record ModelBase
 {
     private DateTimeOffset _updatedAt;
 
+    protected ModelBase(DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
+    {
+        DateTimeOffset utcNow = DateTimeOffset.UtcNow;
+        this.CreatedAt = createdAt ?? updatedAt ?? utcNow;
+        this.UpdatedAt = updatedAt ?? utcNow;
+    }
+
     protected ModelBase(
         int id,
         DateTimeOffset? createdAt,
