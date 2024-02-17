@@ -8,6 +8,8 @@ using CarRepairShopSolution.Domain.Models;
 using CarRepairShopSolution.Infrastructure.Persistence.DbModels;
 using CarRepairShopSolution.Infrastructure.Persistence.Mappings;
 using CarRepairShopSolution.Infrastructure.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
+
 public class CarService
 {
     private readonly IRepository<DbCar> _carRepository;
