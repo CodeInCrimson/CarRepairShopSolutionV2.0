@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/CarRepairShopSolution.Infrastructure/carRepairShop.db-shm
+/CarRepairShopSolution.Infrastructure/carRepairShop.db-wal
+/CarRepairShopSolution.Infrastructure/carRepairShop.db
