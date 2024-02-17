@@ -364,3 +364,8 @@ FodyWeavers.xsd
 /CarRepairShopSolution.Infrastructure/carRepairShop.db-shm
 /CarRepairShopSolution.Infrastructure/carRepairShop.db-wal
 /CarRepairShopSolution.Infrastructure/carRepairShop.db
+/CarRepairShopSolution.UI.Win/carRepairShop.db
+/CarRepairShopSolution.Infrastructure/carRepairShop.db
+/CarRepairShopSolution.UI.Win/carRepairShop.db
+/CarRepairShopSolution.UI.Win/carRepairShop.db-shm
+/CarRepairShopSolution.UI.Win/carRepairShop.db-wal

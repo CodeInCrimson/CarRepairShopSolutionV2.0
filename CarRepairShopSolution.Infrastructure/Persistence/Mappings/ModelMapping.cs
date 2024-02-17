@@ -13,7 +13,6 @@ public static class ModelMapping
     {
         return new DbClient
         {
-            Id = clientModel.Id,
             FirstName = clientModel.Firstname,
             LastName = clientModel.Lastname,
             PhoneNumber = clientModel.Phonenumber,
@@ -25,19 +24,17 @@ public static class ModelMapping
     public static ClientModel MapToClientModel(DbClient dbClient)
     {
         return new ClientModel(
-            id: dbClient.Id,
-            firstName: dbClient.FirstName,
-            lastName: dbClient.LastName,
-            phoneNumber: dbClient.PhoneNumber,
-            createdAt: dbClient.CreatedAt,
-            updatedAt: dbClient.UpdatedAt);
+            dbClient.FirstName,
+            dbClient.LastName,
+            dbClient.PhoneNumber,
+            dbClient.CreatedAt,
+            dbClient.UpdatedAt);
     }
 
     public static DbCar MapToDbCar(CarModel carModel)
     {
         return new DbCar
         {
-            Id = carModel.Id,
             Brand = carModel.Brand,
             Model = carModel.Model,
             Year = carModel.Year,
@@ -50,7 +47,6 @@ public static class ModelMapping
     public static CarModel MapToCarModel(DbCar dbCar)
     {
         return new CarModel(
-            id: dbCar.Id,
             brand: dbCar.Brand,
             model: dbCar.Model,
             year: dbCar.Year,

@@ -4,15 +4,12 @@
 
 namespace CarRepairShopSolution.UI.Win.ViewModels;
 
-using CarRepairShopSolution.Infrastructure.Persistence.DbModels;
 using CarRepairShopSolution.UI.Win.Commands;
 using CarRepairShopSolution.UI.Win.Navigation;
 using CarRepairShopSolution.UI.Win.ViewModels.Abstractions;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CarRepairShopSolution.Domain.Models;
-using CarRepairShopSolution.ApplicationServices.RepositoryMappings;
-using System.Net;
 using CarRepairShopSolution.Infrastructure.Persistence.Repositories;
 
 public partial class ViewAndAddClientsViewModel : ViewModelBase
@@ -64,8 +61,8 @@ public partial class ViewAndAddClientsViewModel : ViewModelBase
 
     private async void LoadClientsAsync()
     {
-        var clientModels = await _clientRepository.GetAllAsync();
         Clients.Clear();
+        var clientModels = await _clientRepository.GetAllAsync();
         foreach (var client in clientModels)
         {
             Clients.Add(client);
@@ -94,8 +91,8 @@ public partial class ViewAndAddClientsViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Failed to add client: {ex.Message}";
             // Consider logging the exception
+            ErrorMessage = $"Failed to add client: {ex.Message}";
         }
     }
 }

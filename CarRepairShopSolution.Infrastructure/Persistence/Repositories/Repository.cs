@@ -31,6 +31,7 @@ public class Repository<T> : IRepository<T>
     public async Task UpdateAsync(T entity) => _context.Set<T>().Update(entity);
 
     /// <summary>
+    /// Requirement from given task: Database operation with ADO.NET
     /// TODO: Move method to another location or update in order to retrieve all cars to be displayed.
     /// </summary>
     /// <param name="carId"></param>
@@ -51,7 +52,6 @@ public class Repository<T> : IRepository<T>
         if (await reader.ReadAsync())
         {
             return new CarModel(
-                id: reader.GetInt32(0),
                 brand: reader.GetString(1),
                 model: reader.GetString(2),
                 year: reader.GetInt32(3),

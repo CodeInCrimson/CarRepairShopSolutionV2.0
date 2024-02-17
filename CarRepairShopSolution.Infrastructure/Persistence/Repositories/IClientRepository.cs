@@ -15,4 +15,6 @@ public interface IClientRepository
     Task<ClientModel?> GetByIdAsync(int clientId);
 
     Task<List<ClientModel>> GetAllAsync();
+
+    Task<List<ClientModel>> GetAllAsyncOld();
 }

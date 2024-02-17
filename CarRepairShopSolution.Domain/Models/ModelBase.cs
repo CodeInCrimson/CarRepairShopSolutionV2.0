@@ -9,7 +9,21 @@ using System.ComponentModel.DataAnnotations;
 
 public abstract record ModelBase
 {
-    private DateTimeOffset _updatedAt;
+    [Key]
+    public int Id { get; protected set; }
+
+    [Required]
+    public DateTimeOffset CreatedAt { get; private set; }
+
+    [Required]
+    public DateTimeOffset UpdatedAt { get; private set; }
+
+    protected ModelBase()
+    {
+        DateTimeOffset now = DateTimeOffset.UtcNow;
+        CreatedAt = now;
+        UpdatedAt = now;
+    }
 
     protected ModelBase(DateTimeOffset? createdAt = null, DateTimeOffset? updatedAt = null)
     {
@@ -18,8 +32,8 @@ public abstract record ModelBase
         this.UpdatedAt = updatedAt ?? utcNow;
     }
 
+    /*
     protected ModelBase(
-        int id,
         DateTimeOffset? createdAt,
         DateTimeOffset? updatedAt)
     {
@@ -38,6 +52,7 @@ public abstract record ModelBase
         this.CreatedAt = createdAt ?? updatedAt ?? utcNow;
         this.UpdatedAt = updatedAt ?? utcNow;
     }
+    */
 
     protected ModelBase(ModelBase original)
     {
@@ -46,8 +61,7 @@ public abstract record ModelBase
         UpdatedAt = DateTimeOffset.UtcNow;
     }
 
-    [Key]
-    public int Id { get; }
+    /*
 
     [Required]
     public DateTimeOffset CreatedAt { get; }
@@ -66,6 +80,7 @@ public abstract record ModelBase
             _updatedAt = value;
         }
     }
+    */
 
     protected static DateOnly ThrowIfFuture(DateOnly value, string propertyName)
     {
