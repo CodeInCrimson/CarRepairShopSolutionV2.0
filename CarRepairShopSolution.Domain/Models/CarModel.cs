@@ -11,7 +11,7 @@ public record CarModel : ModelBase
     {
         Brand = brand;
         Model = model;
-        Year = year;
+        Year = Math.Clamp(year, 1920, DateTime.Now.Year);
         ClientId = clientId;
     }
 

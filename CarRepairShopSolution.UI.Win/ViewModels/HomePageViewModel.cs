@@ -22,7 +22,7 @@ public partial class HomePageViewModel : ViewModelBase
         ViewClientsCommand =
             new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
         ViewCarsCommand =
-            new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
+            new RelayCommand(navigationService.NavigateTo<ViewAndAddCarsViewModel>);
         ManageClientsCommand =
             new RelayCommand(navigationService.NavigateTo<ViewAndAddClientsViewModel>);
         ManageCarsCommand =

@@ -61,7 +61,7 @@ public partial class App : Application
         //services.AddInfrastructure(Config.GetConnectionString("DefaultConnection"));
 
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlite("Data Source=carRepairShop.db"));
+            options.UseSqlite("Data Source=carRepairShopV2.db"));
 
         //services.AddDbContext<AppDbContext>(options =>
         //    options.UseSqlite(Config.GetConnectionString("DefaultConnection")));

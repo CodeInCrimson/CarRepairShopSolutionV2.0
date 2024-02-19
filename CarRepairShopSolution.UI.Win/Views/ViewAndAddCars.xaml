@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="CarRepairShopSolution.UI.Win.Views.ViewAndAddCars"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:CarRepairShopSolution.UI.Win.Views"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="420"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Car Details and DataGrid -->
+        <StackPanel Grid.Column="0" Margin="5">
+            <DataGrid ItemsSource="{Binding Cars}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
+                    <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
+                    <DataGridTextColumn Header="Year" Binding="{Binding Year}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <!-- Clients ListBox and Car Input Fields -->
+        <StackPanel Grid.Column="1" Margin="5">
+            <Label Content="Select client owner for the car to be added" FontWeight="Bold" />
+            <ListBox ItemsSource="{Binding ClientListboxDisplayStrings}" SelectedItem="{Binding SelectedClientDisplayString}" Height="150" Margin="0,5"/>
+
+            <Label Content="Add New Car" FontWeight="Bold" HorizontalContentAlignment="Center" />
+            <Label Content="Brand" />
+            <TextBox Text="{Binding NewCar.Brand}" />
+            <Label Content="Model" />
+            <TextBox Text="{Binding NewCar.Model}" />
+            <Label Content="Year (1920-Current)" />
+            <TextBox Text="{Binding NewCar.Year}" />
+
+            <Button Content="Add Car" Command="{Binding AddCarCommand}" Margin="5,10,5,0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

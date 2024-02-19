@@ -30,7 +30,7 @@
         </DataGrid>
 
         <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="16,0,0,0">
-            <Label Content="Add Client" FontWeight="Bold"/>
+            <Label Content="Add New Client" FontWeight="Bold" HorizontalContentAlignment="Center"/>
             
             <Label>FirstName</Label>
             <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4"/>
@@ -40,7 +40,7 @@
             <TextBox Text="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,4"/>
 
             <Label> </Label>
-            <Button Content="Add" Command="{Binding AddClientCommand}" Margin="0,8"/>
+            <Button Content="Add Client" Command="{Binding AddClientCommand}" Margin="0,8"/>
             <Button Content="Go Back" Command="{Binding GoBackCommand}" Margin="0,4"/> 
             
         </StackPanel>

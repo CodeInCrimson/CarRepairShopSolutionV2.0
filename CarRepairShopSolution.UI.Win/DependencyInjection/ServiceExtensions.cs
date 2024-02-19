@@ -11,6 +11,7 @@ namespace CarRepairShopSolution.UI.Win.DependencyInjection
             services.AddSingleton<MainViewModel>();
             services.AddTransient<HomePageViewModel>();
             services.AddTransient<ViewAndAddClientsViewModel>();
+            services.AddTransient<ViewAndAddCarsViewModel>();
             return services;
         }
     }

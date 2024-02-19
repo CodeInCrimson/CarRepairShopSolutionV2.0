@@ -14,6 +14,10 @@
             <DataTemplate DataType="{x:Type viewModels:ViewAndAddClientsViewModel}">
                 <views:ViewAndAddClients />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModels:ViewAndAddCarsViewModel}">
+                <views:ViewAndAddCars />
+            </DataTemplate>
+
 
         </ResourceDictionary>
 

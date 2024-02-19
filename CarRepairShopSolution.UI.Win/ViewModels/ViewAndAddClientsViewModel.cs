@@ -63,6 +63,7 @@ public partial class ViewAndAddClientsViewModel : ViewModelBase
     {
         Clients.Clear();
         var clientModels = await _clientRepository.GetAllAsync();
+
         foreach (var client in clientModels)
         {
             Clients.Add(client);
