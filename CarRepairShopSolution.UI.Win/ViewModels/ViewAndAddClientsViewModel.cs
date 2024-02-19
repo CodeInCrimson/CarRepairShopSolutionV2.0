@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using CarRepairShopSolution.Domain.Models;
 using CarRepairShopSolution.Infrastructure.Persistence.Repositories;
+using Serilog;
 
 public partial class ViewAndAddClientsViewModel : ViewModelBase
 {
@@ -72,7 +73,7 @@ public partial class ViewAndAddClientsViewModel : ViewModelBase
 
     private async Task AddClientAsync()
     {
-        var clientModel = new ClientModel(FirstName, LastName, PhoneNumber, DateTimeOffset.Now, DateTimeOffset.Now);
+        var clientModel = new ClientModel(FirstName, LastName, PhoneNumber, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow);
 
         try
         {
@@ -88,12 +89,14 @@ public partial class ViewAndAddClientsViewModel : ViewModelBase
             else
             {
                 ErrorMessage = "Failed to add client.";
+                Log.Information(ErrorMessage);
             }
         }
         catch (Exception ex)
         {
             // Consider logging the exception
             ErrorMessage = $"Failed to add client: {ex.Message}";
+            Log.Information(ErrorMessage);
         }
     }
 }

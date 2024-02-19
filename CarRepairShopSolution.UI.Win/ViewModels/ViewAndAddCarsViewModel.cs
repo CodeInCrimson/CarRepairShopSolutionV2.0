@@ -7,7 +7,9 @@ namespace CarRepairShopSolution.UI.Win.ViewModels;
 using CarRepairShopSolution.Domain.Models;
 using CarRepairShopSolution.Infrastructure.Persistence.Repositories;
 using CarRepairShopSolution.UI.Win.Commands;
-using global::CarRepairShopSolution.UI.Win.ViewModels.Abstractions;
+using CarRepairShopSolution.UI.Win.Navigation;
+using CarRepairShopSolution.UI.Win.ViewModels.Abstractions;
+using Serilog;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -15,65 +17,113 @@ using System.Windows.Input;
 
 public class ViewAndAddCarsViewModel : ViewModelBase
 {
-    private readonly IClientRepository clientRepository;
+    private readonly ICarRepository _carRepository;
 
-    private int selectedClientId = -1;
+    private readonly IClientRepository _clientRepository;
 
-    private string selectedClientDisplayString;
+    private readonly INavigationService _navigationService;
+
+    private ClientModel _selectedClient;
+
+    private string brand = string.Empty;
+
+    private string model = string.Empty;
+
+    private int year = DateTime.Now.Year;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ViewAndAddCarsViewModel"/> class.
     /// </summary>
     /// <param name="clientRepository">Injection of the necessary repository</param>
-    public ViewAndAddCarsViewModel(IClientRepository clientRepository)
+    public ViewAndAddCarsViewModel(INavigationService navigationService, ICarRepository carRepository, IClientRepository clientRepository)
     {
-        this.clientRepository = clientRepository;
+        this._navigationService = navigationService;
+        this._carRepository = carRepository;
+        this._clientRepository = clientRepository;
+
         AddCarCommand = new RelayCommand(async () => await AddCarAsync());
+        GoBackCommand = new RelayCommand(_navigationService.NavigateBack);
 
         LoadClientsAsync();
+        LoadCarsAsync();
     }
+
+    public ObservableCollection<ClientModel> Clients { get; } = new ObservableCollection<ClientModel>();
 
     public ObservableCollection<CarModel> DisplayedCars { get; } = new ObservableCollection<CarModel>();
 
-    // public ObservableCollection<ClientModel> Clients { get; } = new ObservableCollection<ClientModel>();
-
     public ObservableCollection<string> ClientListboxDisplayStrings { get; } = new ObservableCollection<string>();
 
-    public int SelectedClientId
+    public ClientModel SelectedClient
     {
-        get => selectedClientId;
+        get => _selectedClient;
         set
         {
-            SetProperty(ref selectedClientId, value);
+            if (SetProperty(ref _selectedClient, value))
+            {
+                SelectedClientId = value?.Id ?? -1;
+            }
         }
+    }
+
+    public int SelectedClientId { get; private set; }
+
+    public string Brand
+    {
+        get => brand;
+        set => SetProperty(ref brand, value);
+    }
+
+    public string Model
+    {
+        get => model;
+        set => SetProperty(ref model, value);
+    }
+
+    public int Year
+    {
+        get => year;
+        set => SetProperty(ref year, value);
     }
 
     /// <summary>
     /// Gets or sets selectedClientDisplayString.
     /// Extract the client ID from the selected display string and update the NewCar.ClientId.
     /// </summary>
-    public string SelectedClientDisplayString
-    {
-        get => selectedClientDisplayString;
-        set
-        {
-            if (SetProperty(ref selectedClientDisplayString, value))
-            {
-                var clientId = ExtractClientId(value);
-                SelectedClientId = clientId;
-            }
-        }
-    }
+    //public string SelectedClientDisplayString
+    //{
+    //    get => selectedClientDisplayString;
+    //    set
+    //    {
+    //        if (SetProperty(ref selectedClientDisplayString, value))
+    //        {
+    //            var clientId = ExtractClientId(value);
+    //            SelectedClientId = clientId;
+    //        }
+    //    }
+    //}
 
     public ICommand AddCarCommand { get; }
 
+    public ICommand GoBackCommand { get; }
+
     private async void LoadClientsAsync()
     {
-        var clientModels = await this.clientRepository.GetAllAsync();
+        Clients.Clear();
+        var clientModels = await _clientRepository.GetAllAsync();
         foreach (var client in clientModels)
         {
-            string displayString = $"ID: {client.Id} - {client.Firstname} {client.Lastname}";
-            this.ClientListboxDisplayStrings.Add(displayString);
+            Clients.Add(client);
+        }
+    }
+
+    private async void LoadCarsAsync()
+    {
+        DisplayedCars.Clear();
+        var carModels = await this._carRepository.GetAllAsync();
+        foreach (var car in carModels)
+        {
+            DisplayedCars.Add(car);
         }
     }
 
@@ -82,22 +132,47 @@ public class ViewAndAddCarsViewModel : ViewModelBase
     /// </summary>
     /// <param name="displayString"></param>
     /// <returns></returns>
-    private int ExtractClientId(string displayString)
-    {
-        var idPart = displayString.Split('-')[0].Trim();
-        var idStr = idPart.Split(':')[1].Trim();
-        if (int.TryParse(idStr, out var clientId))
-        {
-            return clientId;
-        }
+    //private int ExtractClientId(string displayString)
+    //{
+    //    var idPart = displayString.Split('-')[0].Trim();
+    //    var idStr = idPart.Split(':')[1].Trim();
+    //    if (int.TryParse(idStr, out var clientId))
+    //    {
+    //        return clientId;
+    //    }
 
-        return -1;
-    }
+    //    return -1;
+    //}
 
     private async Task AddCarAsync()
     {
-        // TODO: Implement the repository logic to add a new car
+        try
+        {
+            if (SelectedClientId > 0 && Year > 1920 && !string.IsNullOrEmpty(Brand) && !string.IsNullOrEmpty(Model))
+            {
+                var newCarModel = new CarModel(Brand, Model, Year, SelectedClientId, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow);
 
-        var NewCar = new CarModel(string.Empty, string.Empty, DateTime.Now.Year, -1, DateTimeOffset.Now, DateTimeOffset.Now);
+                var success = await _carRepository.AddAsync(newCarModel);
+                if (success)
+                {
+                    // Refresh the collection
+                    LoadCarsAsync();
+                    Brand = string.Empty;
+                    Model = string.Empty;
+                    Year = -1;
+                }
+                else
+                {
+                    ErrorMessage = "Failed to add car.";
+                    Log.Information(ErrorMessage);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Consider logging the exception
+            ErrorMessage = $"Failed to add car: {ex.Message}";
+            Log.Information(ErrorMessage);
+        }
     }
 }

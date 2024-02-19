@@ -15,6 +15,7 @@ public static class DependencyInjection
     {
         services.AddDbContext<AppDbContext>(options => options.UseSqlite(connectionString));
         services.AddScoped<IClientRepository, ClientRepository>();
+        services.AddScoped<ICarRepository, CarRepository>();
 
         // Other service registrations
 

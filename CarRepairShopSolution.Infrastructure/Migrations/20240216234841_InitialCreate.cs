@@ -21,7 +21,7 @@ namespace CarRepairShopSolution.Infrastructure.Migrations
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -39,7 +39,7 @@ namespace CarRepairShopSolution.Infrastructure.Migrations
                     Year = table.Column<int>(type: "INTEGER", nullable: false),
                     ClientId = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false)
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "TEXT", nullable: false),
                 },
                 constraints: table =>
                 {

@@ -21,7 +21,6 @@ public record ClientModel : ModelBase
     /// Initializes a new instance of the <see cref="ClientModel"/> class.
     /// Initial Client construction.
     /// </summary>
-    /// <param name="id"></param>
     /// <param name="firstName"></param>
     /// <param name="lastName"></param>
     /// <param name="phoneNumber"></param>

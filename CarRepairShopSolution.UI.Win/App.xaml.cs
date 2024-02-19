@@ -9,7 +9,6 @@ using System.IO;
 using System.Windows;
 using CarRepairShopSolution.ApplicationServices.RepositoryMappings;
 using CarRepairShopSolution.Infrastructure.Persistence.DatabaseContextInit;
-using CarRepairShopSolution.Infrastructure.Persistence.DbModels;
 using CarRepairShopSolution.Infrastructure.Persistence.Repositories;
 using CarRepairShopSolution.UI.Win.DependencyInjection;
 using CarRepairShopSolution.UI.Win.Navigation;
@@ -26,22 +25,17 @@ public partial class App : Application
 {
     private readonly ServiceProvider _serviceProvider;
 
-    public static IConfiguration? Config { get; private set; }
-
+    /// <summary>
+    ///     Initializes a new instance of the <see cref="App"/> class.
+    /// </summary>
     public App()
     {
         ServiceCollection services = new ServiceCollection();
 
+        ConfigureLogger();
         ConfigureServices(services);
+
         _serviceProvider = services.BuildServiceProvider();
-
-        Config = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
-            .Build();
-
-        Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(Config)
-            .CreateLogger();
 
         // Ensure any configuration errors in Serilog are caught
         Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
@@ -49,10 +43,43 @@ public partial class App : Application
         Log.Information("Application Starting Up");
     }
 
+    /// <summary>
+    /// TODO: .
+    /// </summary>
+    public static IConfiguration? Config { get; private set; }
+
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
+
+        try
+        {
+            var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
+            var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+
+            navigationService.NavigateTo<HomePageViewModel>();
+
+            MainWindow mainWindow = new () { DataContext = mainViewModel };
+            mainWindow.Show();
+
+            Log.Information("Application starting up");
+        }
+        catch (Exception ex)
+        {
+            Log.Fatal(ex, "A critical error occurred.");
+            throw;
+        }
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        Log.Information("Application Shutting Down");
+        Log.CloseAndFlush();
+        base.OnExit(e);
+    }
+
     private void ConfigureServices(ServiceCollection services)
     {
-        // TODO: Setup Configuration and Serilog
-
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -63,13 +90,10 @@ public partial class App : Application
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlite("Data Source=carRepairShopV2.db"));
 
-        //services.AddDbContext<AppDbContext>(options =>
-        //    options.UseSqlite(Config.GetConnectionString("DefaultConnection")));
-
-        // Register the generic repository for dependency injection
+        // Register the generic repository and specific repositories
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-
         services.AddScoped<IClientRepository, ClientRepository>();
+        services.AddScoped<ICarRepository, CarRepository>();
 
         // Register NavigationService for DI
         services.AddScoped<INavigationService, NavigationService>();
@@ -78,29 +102,26 @@ public partial class App : Application
         services.AddScoped<CarService>();
 
         services.AddViewModels();
-
-        // Add repository registrations
     }
 
-    protected override void OnStartup(StartupEventArgs e)
+    private void ConfigureLogger()
     {
-        base.OnStartup(e);
+        Config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
 
-        var navigationService = _serviceProvider.GetRequiredService<INavigationService>();
-        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(Config)
+            .CreateLogger();
 
-        navigationService.NavigateTo<HomePageViewModel>();
-
-        MainWindow mainWindow = new () { DataContext = mainViewModel };
-        mainWindow.Show();
-
-        Log.Information("Application starting up");
-    }
-
-    protected override void OnExit(ExitEventArgs e)
-    {
-        Log.Information("Application Shutting Down");
-        Log.CloseAndFlush();
-        base.OnExit(e);
+        /*
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Is(Debugger.IsAttached ? LogEventLevel.Debug : LogEventLevel.Information)
+            .ReadFrom.Configuration(Config)
+            .WriteTo.EventLog("CarRepairShopSolution.UI.Win", "CarRepairShopSolution")
+            .Enrich.WithProperty("ApplicationName", "CarRepairShopSolution")
+            .Enrich.WithProperty("ApplicationVersion", "2.0")
+            .Enrich.FromLogContext()
+            .CreateLogger(); */
     }
 }

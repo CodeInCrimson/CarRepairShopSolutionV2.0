@@ -11,7 +11,17 @@ public record CarModel : ModelBase
     {
         Brand = brand;
         Model = model;
-        Year = Math.Clamp(year, 1920, DateTime.Now.Year);
+        Year = year;
+        ClientId = clientId;
+    }
+
+    public CarModel(int id, string brand, string model, int year, int clientId, DateTimeOffset createdAt, DateTimeOffset updatedAt)
+        : base(createdAt, updatedAt)
+    {
+        Id = id;
+        Brand = brand;
+        Model = model;
+        Year = year;
         ClientId = clientId;
     }
 

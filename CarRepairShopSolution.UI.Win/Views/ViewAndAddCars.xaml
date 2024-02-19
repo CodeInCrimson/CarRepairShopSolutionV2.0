@@ -8,35 +8,44 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="420"/>
+            <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Car Details and DataGrid -->
         <StackPanel Grid.Column="0" Margin="5">
-            <DataGrid ItemsSource="{Binding Cars}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
+            <DataGrid ItemsSource="{Binding DisplayedCars}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Header="Car ID" Binding="{Binding Id}" />
                     <DataGridTextColumn Header="Brand" Binding="{Binding Brand}" />
                     <DataGridTextColumn Header="Model" Binding="{Binding Model}" />
                     <DataGridTextColumn Header="Year" Binding="{Binding Year}" />
+                    <DataGridTextColumn Header="Owner Client ID" Binding="{Binding ClientId}" />
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
 
-        <!-- Clients ListBox and Car Input Fields -->
+        <!-- Clients DataGrid and Car Input Fields -->
         <StackPanel Grid.Column="1" Margin="5">
             <Label Content="Select client owner for the car to be added" FontWeight="Bold" />
-            <ListBox ItemsSource="{Binding ClientListboxDisplayStrings}" SelectedItem="{Binding SelectedClientDisplayString}" Height="150" Margin="0,5"/>
-
+            <DataGrid ItemsSource="{Binding Clients}" AutoGenerateColumns="False" SelectedItem="{Binding SelectedClient}" CanUserAddRows="False" IsReadOnly="True" Height="150" Margin="0,5">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Client ID" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Name" Binding="{Binding Firstname}" />
+                    <DataGridTextColumn Header="Surname" Binding="{Binding Lastname}" />
+                </DataGrid.Columns>
+            </DataGrid>
             <Label Content="Add New Car" FontWeight="Bold" HorizontalContentAlignment="Center" />
             <Label Content="Brand" />
-            <TextBox Text="{Binding NewCar.Brand}" />
+            <TextBox Text="{Binding Brand}" />
             <Label Content="Model" />
-            <TextBox Text="{Binding NewCar.Model}" />
-            <Label Content="Year (1920-Current)" />
-            <TextBox Text="{Binding NewCar.Year}" />
-
-            <Button Content="Add Car" Command="{Binding AddCarCommand}" Margin="5,10,5,0" />
+            <TextBox Text="{Binding Model}" />
+            <Label Content="Production year (1920 - Current)" />
+            <TextBox Text="{Binding Year, UpdateSourceTrigger=PropertyChanged}" />
+            <Label Height="10" Content=" " />
+            <Button Content="Add Car" Command="{Binding AddCarCommand}" Margin="0,0,0,5" />
+            <Button Content="Go Back" Command="{Binding GoBackCommand}" Margin="0,5,0,5"/>
         </StackPanel>
+        
     </Grid>
 </UserControl>
